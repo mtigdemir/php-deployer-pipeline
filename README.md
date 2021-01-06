@@ -12,7 +12,28 @@ https://medium.com/@mtigdemir/php-deployment-with-deployer-to-aws-via-bitbucket-
 - PHP 7.1 (`mtigdemir\php-deployer-pipeline:7.1`)
 - PHP 7.3 (`mtigdemir\php-deployer-pipeline:7.3.25`)
 
-{% gist 1bb599d7fa5caad3ab647aad87fadc18 %}
+```
+image: mtigdemir/php-deployer-pipeline:{version}
+
+pipelines:
+  branches:
+    master:
+      - step:
+          caches:
+            - composer
+          script:
+            - composer install 
+            - vendor/bin/phpunit
+            - dep deploy -vvv test
+            
+    production:
+      - step:
+          caches:
+            - composer
+          script:
+            - composer install --no-dev
+            - dep deploy production
+```
 
 
-Please note that, only PHP 7.1 tag uses Composer v1 and all the builds after that compatible with Composer v2
+**Please note that, only PHP 7.1 tag uses Composer v1 and all the builds after that compatible with Composer v2**
