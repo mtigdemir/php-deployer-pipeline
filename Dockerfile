@@ -1,5 +1,5 @@
 
-FROM php:7.1-cli-alpine
+FROM php:7.3.25-cli-alpine
 
 ## Install SSH and Rsync
 RUN apk add --no-cache openssh rsync
